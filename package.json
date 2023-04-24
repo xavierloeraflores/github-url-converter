@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.0.5",
     "class-variance-authority": "^0.5.2",
     "clsx": "^1.2.1",
     "lucide-react": "^0.176.0",
