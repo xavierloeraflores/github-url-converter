@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create T3 App</title>
+        <title>GitHub.io URL Converter</title>
         <meta
           name="description"
           content="Discover the story behind our GitHub.io to GitHub Code Converter App. Learn how our user-friendly web app, designed to make navigating open-source projects easier, was developed and how it can benefit you. Find out more about our app now!"
