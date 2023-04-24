@@ -4,8 +4,9 @@ import { Alert, AlertTitle, AlertDescription } from "npm/components/ui/alert";
 import { Button } from "npm/components/ui/button";
 import { Input } from "npm/components/ui/input";
 import { useState } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Copy } from "lucide-react";
 import { useToast } from "npm/components/ui/use-toast";
+import Link from "next/link";
 
 const regex = /https:\/\/([a-zA-Z0-9-]+)\.github\.io\/([a-zA-Z0-9-]+)\/?/;
 
@@ -30,7 +31,6 @@ const Home: NextPage = () => {
       setError("Unexpected Error");
       return;
     }
-    console.log(user, repo);
     toast({
       title: "Success",
       description: "URL converted successfully",
@@ -73,6 +73,23 @@ const Home: NextPage = () => {
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
+        )}
+        {user === "" && repo === "" ? null : (
+          <div>
+            <Link href={`https://github.com/${user}/${repo}`}>
+              https://github.com/{user}/{repo}
+            </Link>
+            <Button
+              variant="outline"
+              onClick={
+                void navigator.clipboard.writeText(
+                  `https://github.com/${user}/${repo}`
+                )
+              }
+            >
+              <Copy />
+            </Button>
+          </div>
         )}
       </main>
     </>
