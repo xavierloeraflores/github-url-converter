@@ -1,16 +1,35 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { Alert, AlertTitle, AlertDescription } from "npm/components/ui/alert";
 import { Button } from "npm/components/ui/button";
 import { Input } from "npm/components/ui/input";
 import { useState } from "react";
+import { AlertCircle } from "lucide-react";
+
+const regex = /https:\/\/([a-zA-Z0-9-]+)\.github\.io\/([a-zA-Z0-9-]+)\/?/;
 
 const Home: NextPage = () => {
   const [input, setInput] = useState<string>("");
+  const [user, setUser] = useState<string>("");
+  const [repo, setRepo] = useState<string>("");
+  const [error, setError] = useState<string>("");
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInput(e.target.value);
   }
   function buttonOnClick() {
-    console.log(input);
+    const match = input.match(regex);
+    if (!match) {
+      setError("Invalid URL");
+      return;
+    }
+    const user = match[1] || "";
+    const repo = match[2] || "";
+    if (user === "" || repo === "") {
+      setError("Unexpected Error");
+      return;
+    }
+    setUser(user);
+    setRepo(repo);
   }
 
   return (
@@ -30,7 +49,7 @@ const Home: NextPage = () => {
         <h3 className="mb-8 text-center text-2xl md:text-3xl">
           Convert links from GitHub.io to GitHub Repos
         </h3>
-        <div className="mx-4  flex w-full justify-center ">
+        <div className="mx-4 my-2 flex w-full justify-center ">
           <Input
             type="url"
             placeholder="https://example.github.io/example/"
@@ -41,6 +60,13 @@ const Home: NextPage = () => {
             Convert
           </Button>
         </div>
+        {error === "" ? null : (
+          <Alert variant="destructive">
+            <AlertCircle className="h-6 w-6" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
       </main>
     </>
   );
