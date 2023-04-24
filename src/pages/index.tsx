@@ -23,14 +23,19 @@ const Home: NextPage = () => {
     const match = input.match(regex);
     if (!match) {
       setError("Invalid URL");
+      setUser("");
+      setRepo("");
       return;
     }
     const user = match[1] || "";
     const repo = match[2] || "";
     if (user === "" || repo === "") {
       setError("Unexpected Error");
+      setUser("");
+      setRepo("");
       return;
     }
+    setError("");
     toast({
       title: "Success",
       description: "URL converted successfully",
@@ -75,8 +80,11 @@ const Home: NextPage = () => {
           </Alert>
         )}
         {user === "" && repo === "" ? null : (
-          <div>
-            <Link href={`https://github.com/${user}/${repo}`}>
+          <div className="mx-4 my-2 flex w-full items-center justify-center">
+            <Link
+              href={`https://github.com/${user}/${repo}`}
+              className="mr-2 underline"
+            >
               https://github.com/{user}/{repo}
             </Link>
             <Button
