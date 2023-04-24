@@ -5,10 +5,12 @@ import { Button } from "npm/components/ui/button";
 import { Input } from "npm/components/ui/input";
 import { useState } from "react";
 import { AlertCircle } from "lucide-react";
+import { useToast } from "npm/components/ui/use-toast";
 
 const regex = /https:\/\/([a-zA-Z0-9-]+)\.github\.io\/([a-zA-Z0-9-]+)\/?/;
 
 const Home: NextPage = () => {
+  const { toast } = useToast();
   const [input, setInput] = useState<string>("");
   const [user, setUser] = useState<string>("");
   const [repo, setRepo] = useState<string>("");
@@ -28,6 +30,11 @@ const Home: NextPage = () => {
       setError("Unexpected Error");
       return;
     }
+    console.log(user, repo);
+    toast({
+      title: "Success",
+      description: "URL converted successfully",
+    });
     setUser(user);
     setRepo(repo);
   }
